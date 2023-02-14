@@ -19,8 +19,5 @@ public class ChatController {
         messagingTemplate.convertAndSend("/sub/message/user/" + message.getRoomId(), message);
     }
 
-    @PostMapping("/broadcast/{roomId}")
-    public void userMessage(@RequestBody Object data, @PathVariable String roomId) {
-        messagingTemplate.convertAndSend("/sub/message/user/" + roomId, data);
-    }
+
 }
