@@ -4,8 +4,7 @@ import com.socket.server.model.UserMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 // 채팅 데이터
 @RequiredArgsConstructor
@@ -18,5 +17,10 @@ public class ChatController {
     @MessageMapping("/message/user")
     public void userMessage(UserMessage message) {
         messagingTemplate.convertAndSend("/sub/message/user/" + message.getRoomId(), message);
+    }
+
+    @PostMapping("/broadcast/{roomId}")
+    public void userMessage(@RequestBody Object data, @PathVariable String roomId) {
+        messagingTemplate.convertAndSend("/sub/message/user/" + roomId, data);
     }
 }
